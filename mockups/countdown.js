@@ -1,4 +1,4 @@
-// Days left in a sale that ends at the end of `endDate` (YYYY-MM-DD), counted in Pacific time.
+// Days left in a sale that ends at the end of endDate (YYYY-MM-DD), counted in Pacific time.
 // Returns null after the sale has ended.
 function saleCountdown(endDate, now) {
   now = now || new Date();
