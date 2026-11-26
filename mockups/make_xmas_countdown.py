@@ -4,11 +4,13 @@ exec(open("make_cards.py").read().split("CARDS = [")[0])
 from playwright.sync_api import sync_playwright
 
 DAYS = [("Dec 2 – Dec 21", "2026-12-02T12:00:00-08:00"), ("Tue Dec 22", "2026-12-22T12:00:00-08:00"),
-        ("Wed Dec 23", "2026-12-23T12:00:00-08:00"), ("Thu Dec 24", "2026-12-24T12:00:00-08:00"), ("Sat Dec 26", "2026-12-26T12:00:00-08:00")]
+        ("Thu Dec 24", "2026-12-24T12:00:00-08:00"), ("Fri Dec 25", "2026-12-25T12:00:00-08:00"), ("Sat Dec 26", "2026-12-26T12:00:00-08:00")]
 # use the real tested countdown code for each day's text
 texts = json.loads(subprocess.check_output(["node", "-e",
     "const f=require('./countdown.js');console.log(JSON.stringify(" + json.dumps([d for _, d in DAYS]) + ".map(t=>f('2026-12-26',new Date(t),5,'CHRISTMAS SALE'))))"]))
 
+import re
+texts = [re.sub(r'^(\d+) DAYS LEFT$', r'JUST \1 DAYS', t) for t in texts]
 def xcard(t):
     return card(GREEN, [("kicker", "★ MERRY CHRISTMAS ★"), ("big", t), ("sub", "GIFT CERTIFICATES" if t == "CHRISTMAS SALE" else "GIFT CERTIFICATE SALE"), ("ribbon", ""),
                         ("button", "SAVE NOW ›"), ("foot", "Emailed right away, even on Christmas Day")])

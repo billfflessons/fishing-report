@@ -22,7 +22,7 @@ snippet=f'''<!-- HOMEPAGE GIFT CARD SCHEDULE (prepared Nov 26, 2026; design appr
   What it shows, by Pacific time:
     through Tue Dec 1, 2026      -> Black Friday sale card, "SALE · N DAYS LEFT", "LAST DAY" on Dec 1
     Wed Dec 2 through Mon Dec 21 -> Christmas sale card reading "CHRISTMAS SALE"
-    Tue Dec 22 through Sat Dec 26 -> same card counting down, "5 DAYS LEFT" ... "LAST DAY" on Dec 26
+    Tue Dec 22 through Sat Dec 26 -> same card counting down, "JUST 5 DAYS" ... "JUST 2 DAYS", "LAST DAY" on Dec 26
     from Sun Dec 27              -> the original gift card (code saved Nov 20, 2026)
   Desktop (1024px and wider): 290 x 231 px, flush top-right of the hero photo, same spot and size as the Christmas card.
   Phone: up to 340 px wide, under the opening text, where the Christmas phone card is now.
@@ -50,6 +50,7 @@ snippet=f'''<!-- HOMEPAGE GIFT CARD SCHEDULE (prepared Nov 26, 2026; design appr
 {cd}(function(){{
   var now = window.__bwGiftNow ? new Date(window.__bwGiftNow) : new Date();  /* __bwGiftNow: testing only */
   var bf = saleCountdown('{BF_END}', now), xm = bf ? null : saleCountdown('{XM_END}', now, 5, 'CHRISTMAS SALE');
+  if (xm) xm = xm.replace(/^(\\d+) DAYS LEFT$/, 'JUST $1 DAYS');
   var phase = bf ? 'bf' : (xm ? 'xmas' : 'orig');
   document.querySelectorAll('.bw-gift[data-phase="' + phase + '"]').forEach(function(el){{
     el.setAttribute('data-on', '');
